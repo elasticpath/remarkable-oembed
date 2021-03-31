@@ -1,0 +1,9 @@
+{
+  "reporterEnabled": "xunit, mochawesome",
+  "xunitReporterOptions": {
+    "output": "build/test-report/junit.xml"
+  },
+  "mochawesomeReporterOptions": {
+    "reportDir": "build/test-report/mochawesome"
+  }
+}
