@@ -1,0 +1,44 @@
+{
+  "name": "remarkable-oembed",
+  "version": "1.0.0",
+  "main": "src/hello.js",
+  "repository": "git@gitlab.elasticpath.com:commerce-cloud/playground/remarkable-oembed.git",
+  "author": "Allegra Chen <allegra.chen@elasticpath.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-formatter-multiple": "^1.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "mkdirp": "^1.0.4",
+    "mocha": "^8.3.2",
+    "mocha-multi-reporters": "^1.5.1",
+    "mochawesome": "^6.2.2",
+    "nyc": "^15.1.0"
+  },
+  "scripts": {
+    "test": "nyc mocha --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
+    "lint": "eslint --format eslint-formatter-multiple src/** test/**"
+  },
+  "eslint-formatter-multiple": {
+    "formatters": [
+      {
+        "name": "stylish",
+        "output": "console"
+      },
+      {
+        "name": "junit",
+        "output": "file",
+        "path": "build/lint-report/eslint-junit.xml"
+      },
+      {
+        "name": "html",
+        "output": "file",
+        "path": "build/lint-report/eslint-html.html"
+      }
+    ]
+  }
+}

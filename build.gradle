@@ -1,0 +1,68 @@
+plugins {
+  id 'base'
+  id 'com.github.node-gradle.node' version '3.0.1'
+}
+
+node {
+  // Whether to download and install a specific Node.js version or not
+  // If false, it will use the globally installed Node.js
+  // If true, it will download node using above parameters
+  // Note that npm is bundled with Node.js
+  download = true
+
+  // Version of node to download and install (only used if download is true)
+  // It will be unpacked in the workDir
+  version = '14.16.0'
+
+  // Version of Yarn to use
+  // Any Yarn task first installs Yarn in the yarnWorkDir
+  // It uses the specified version if defined and the latest version otherwise (by default)
+  yarnVersion = '1.22.10'
+}
+
+yarn_install {
+  // Specify the inputs and outputs for incremental build.
+  // Save build time when the inputs and outputs are up-to-date.
+  inputs.files('package.json', 'yarn.lock')
+  outputs.dir('node_modules')
+}
+
+
+// -------- Build related tasks ----------
+clean {
+  delete 'node_modules', '.nyc_output'
+}
+
+
+// -------- Test related tasks ----------
+task lint(type: YarnTask) {
+  description 'Eslint all .js files'
+  group 'Test'
+
+  inputs.files('src/**/*.js', 'test/**/*.js')
+  outputs.dir("$buildDir/lint-report")
+
+  dependsOn 'yarn_install'
+
+  args = ['lint']
+}
+
+task unit_test(type: YarnTask) {
+  description 'Run all unit tests'
+  group 'Test'
+
+  inputs.dir('src')
+  inputs.dir('test')
+  outputs.dirs("$buildDir/lint-report", "$buildDir/lint-report")
+
+  dependsOn 'yarn_install'
+
+  args = ['test']
+}
+
+task test {
+  description 'Run eslint linter and mocha unit tests'
+  group 'Test'
+
+  dependsOn 'lint', 'unit_test'
+}
