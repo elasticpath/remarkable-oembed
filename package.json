@@ -1,7 +1,7 @@
 {
   "name": "remarkable-oembed",
   "version": "1.0.0",
-  "main": "src/hello.js",
+  "main": "src/index.js",
   "repository": "git@gitlab.elasticpath.com:commerce-cloud/playground/remarkable-oembed.git",
   "author": "Allegra Chen <allegra.chen@elasticpath.com>",
   "license": "MIT",
@@ -17,7 +17,8 @@
     "mocha": "^8.3.2",
     "mocha-multi-reporters": "^1.5.1",
     "mochawesome": "^6.2.2",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "remarkable": "^2.0.1"
   },
   "scripts": {
     "test": "nyc mocha --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
