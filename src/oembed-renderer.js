@@ -1,3 +1,6 @@
+const { findMatchingEndpoint, sendOembedRequest, parseOembedResponse } = require('./utils')
+const providers = require('../data/providers.json')
+
 /**
  * Render the HTML element for oEmbed Markdown syntax.
  * @param {String[]} tokens  The list of tokens currently being processed.
@@ -7,7 +10,12 @@
  * @returns {String}         HTML element.
  */
 const renderOembed = (tokens, idx /* , options, env */) => {
-  return `<div><a href="${tokens[idx].url}">Hello world</a></div>\n`
+  const consumerUrl = tokens[idx].url
+  const matchingEndpointUrl = findMatchingEndpoint(providers, consumerUrl)
+  const oembedUrl = matchingEndpointUrl + '?url=' + consumerUrl + '&format=json'
+  const providerResponse = sendOembedRequest(oembedUrl)
+
+  return parseOembedResponse(providerResponse)
 }
 
 module.exports = renderOembed

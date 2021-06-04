@@ -7,16 +7,16 @@
  * @returns {Boolean}          True if the line is in the proper oEmbed syntax; otherwise false.
  */
 const tokenizeOembed = (state, startLine /* , endLine , silent */) => {
-  // Markdown: '  @[string](url)'
+  // Markdown: '  !oembed[alt-text](src-url "title")'
   // pos:         ^
   const pos = state.bMarks[startLine] + state.tShift[startLine]
   let max = state.eMarks[startLine]
 
-  // cut trailing spaces from the end of the line: '@[string](url)      \n'
-  // max:                                                         ^  <-  ^
+  // cut trailing spaces from the end of the line: '!oembed[alt-text](src-url "title")      \n'
+  // max:                                                                             ^  <-  ^
   max = state.skipCharsBack(max, 0x20 /* space */, pos)
 
-  const oembedRegex = /^@\[.+\]\((?<url>(https|http):\/\/.+)\)$/
+  const oembedRegex = /^!oembed\[(?<altText>.*)\]\((?<url>\S+)([ ]+["](?<title>.*)["])?\)$/
   const oembedMatch = state.src.slice(pos, max).match(oembedRegex)
   if (!oembedMatch) { return false }
 
@@ -25,6 +25,8 @@ const tokenizeOembed = (state, startLine /* , endLine , silent */) => {
 
   state.tokens.push({
     type: 'oembed',
+    altText: oembedMatch.groups.altText, // this property is not used but could be useful
+    title: oembedMatch.groups.title, // this property is not used but could be useful
     url: oembedMatch.groups.url
   })
 

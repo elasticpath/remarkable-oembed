@@ -3,6 +3,68 @@
 This repository builds a plugin for embedding external contents, e.g. videos, to Markdown documents. Utilizing the [oEmbed API](https://oembed.com/) and the [Rmarkable markdown parser](https://github.com/jonschlinkert/remarkable), the plugin in this repo provides a custom Markdown syntax that you can use in your Markdown document to embed external contents.
 
 ## Usage
+1. Add `remarkable` and `remarkable-oembed` to your project using a package manager:
+
+    ```
+    yarn add -D remarkable remarkable-oembed
+    ```
+
+2. Enable the `remarkable` and `remarkable-oembed` plugin:
+
+    ``` js
+    const { Remarkable } = require('remarkable')
+    const remarkableOembed = require('remarkable-oembed')
+
+    let md = new Remarkable().use(remarkableOembed)
+    ```
+
+3. Use the oEmbed remarkable syntax like following:
+
+    - With an alternative text and title:
+      ```
+      !oembed[alternative text](source url "title")
+
+      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Elastic Path Commerce Cloud")
+      ```
+
+    - With an alternative text only:
+      ```
+      !oembed[alternative text](source url)
+
+      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg)
+      ```
+      **Note:** Please make sure that there is no space between your source URL and the closing bracket.
+      ```
+      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg     )
+      ```
+      The Markdown above will not work.
+
+    - With a title only:
+      ```
+      !oembed[](source url "title")
+
+      !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Explains Elastic Path Commerce Cloud")
+      ```
+
+    - With no alternative text or title:
+      ```
+      !oembed[](source url)
+
+      !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)
+      ```
+
+4. Render the Markdown to get corresponding HTML ouput:
+
+    ```js
+    md.render('!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)')
+    ```
+
+    This will give you the output:
+
+    ```js
+    '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    ```
+
 
 ## Development
 
