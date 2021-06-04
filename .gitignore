@@ -32,4 +32,4 @@ pids
 .nyc_output
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode
