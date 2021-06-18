@@ -27,7 +27,7 @@ const findMatchingEndpoint = (providers, consumerUrl) => {
           const schemeMatch = consumerUrl.match(schemeRegex)
 
           if (schemeMatch) {
-            matchingEndpointUrl = endpointUrl
+            matchingEndpointUrl = trimTrailingSlash(endpointUrl)
             return true
           }
 
@@ -35,7 +35,7 @@ const findMatchingEndpoint = (providers, consumerUrl) => {
         })
       } else {
         if (consumerUrl.startsWith(providerUrl)) {
-          matchingEndpointUrl = endpointUrl
+          matchingEndpointUrl = trimTrailingSlash(endpointUrl)
           return true
         }
 
@@ -53,6 +53,13 @@ const findMatchingEndpoint = (providers, consumerUrl) => {
   }
 
   return matchingEndpointUrl
+}
+
+const trimTrailingSlash = (endpointUrl) => {
+  if (endpointUrl.endsWith('/')) {
+    return endpointUrl.substring(0, endpointUrl.length - 1)
+  }
+  return endpointUrl
 }
 
 /**
@@ -89,7 +96,7 @@ const sendOembedRequest = (oembedUrl) => {
  */
 const renderVideoRichHtml = (response) => {
   if (response.html && response.height && response.width) {
-    return response.html + '\n'
+    return `<div class="oembed oembed-${response.type}">${response.html}</div>\n`
   } else {
     throw new Error('The oEmbed response returned by the provider does not contain required "html", "height", or "width" parameters. It is not a valid "Video" or "Rich Media" type response.')
   }
