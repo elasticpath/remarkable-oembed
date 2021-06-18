@@ -53,6 +53,18 @@ This repository builds a plugin for embedding external contents, e.g. videos, to
       !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)
       ```
 
+    **Note:** You can add extra configuration of the oEmbed response by adding extra query parameters to the end of the source url.
+
+    For instance, `maxwidth` and `maxheight` are two valid request parameters for rich and video type according to section *2.3.4.2. The video type* and *2.3.4.4. The rich type* from [oembed](https://oembed.com/). You can specify the width and height by adding `&maxwidth=` and `&maxheight=` to the end of the source url:
+    ```
+    !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg&maxwidth=100&maxheight=500)
+    ```
+
+    There are also custom options implemented by each provider, e.g. `theme` option for [codesandbox](https://codesandbox.io/docs/embedding). According to its documentation, you could trigger the light theme by adding `?theme=light` to the end of the source url:
+    ```
+    !oembed[](https://codesandbox.io/s/react-new?theme=light)
+    ```
+
 4. Render the Markdown to get corresponding HTML ouput:
 
     ```js

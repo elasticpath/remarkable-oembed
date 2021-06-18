@@ -9,15 +9,15 @@ md.use(oembedPlugin)
 const oembedBlockTests = [
   { // oEmbed Markdown syntax test
     md: '!oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Elastic Path Commerce Cloud")',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // oEmbed Markdown syntax test
     md: '!oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg      "What is Elastic Path Commerce Cloud")',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // oEmbed Markdown syntax test
     md: '!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // oEmbed Markdown syntax test
     md: '!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg           )',
@@ -33,23 +33,27 @@ const oembedBlockTests = [
   },
   { // oEmbed Markdown syntax test
     md: '!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)\n!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // oEmbed Markdown syntax test
     md: '  !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)    ',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // oEmbed Markdown syntax test
     md: '  !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)    \n',
-    html: '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>\n'
   },
   { // Provider does not have a scheme specified
     md: '!oembed[](https://www.edumedia-sciences.com/en/media/696-human-body)',
-    html: '<iframe width=550 height=440 src="https://www.edumedia-sciences.com/en/media/frame/696/" frameborder=0></iframe>\n'
+    html: '<div class="oembed oembed-rich"><iframe width=550 height=440 src="https://www.edumedia-sciences.com/en/media/frame/696/" frameborder=0></iframe></div>\n'
   },
   { // Provider endpoint url contains '{format}', e.g. https://www.ted.com/services/v1/oembed.{format}
     md: '!oembed[](https://www.ted.com/talks/brittany_young_how_dirt_bikes_and_stem_ignite_ingenuity_in_baltimore)',
-    html: '<iframe src="https://embed.ted.com/talks/brittany_young_how_dirt_bikes_and_stem_ignite_ingenuity_in_baltimore" width="560" height="316" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n'
+    html: '<div class="oembed oembed-video"><iframe src="https://embed.ted.com/talks/brittany_young_how_dirt_bikes_and_stem_ignite_ingenuity_in_baltimore" width="560" height="316" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>\n'
+  },
+  { // Provider endpoint url ends with a trailing slash
+    md: '!oembed[](https://open.spotify.com/playlist/37i9dQZF1DX4sWSpwq3LiO)',
+    html: '<div class="oembed oembed-rich"><iframe width="100%" height="380" allowtransparency="true" frameborder="0" allow="encrypted-media" title="Spotify Embed: Peaceful Piano" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO"></iframe></div>\n'
   }
 ]
 
