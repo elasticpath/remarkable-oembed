@@ -126,3 +126,5 @@ const parseOembedResponse = (providerResponse) => {
 exports.findMatchingEndpoint = findMatchingEndpoint
 exports.sendOembedRequest = sendOembedRequest
 exports.parseOembedResponse = parseOembedResponse
+exports.trimTrailingSlash = trimTrailingSlash
+exports.renderVideoRichHtml = renderVideoRichHtml
