@@ -1,10 +1,11 @@
 {
   "name": "remarkable-oembed",
+  "description": "Plugin for remarkable markdown parser for embedding rich media from external sites using oEmbed API and specs",
   "version": "1.0.0",
   "main": "src/index.js",
-  "repository": "git@gitlab.elasticpath.com:commerce-cloud/playground/remarkable-oembed.git",
+  "repository": "git@github.com:elasticpath/remarkable-oembed.git",
   "author": "Allegra Chen <allegra.chen@elasticpath.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "chai": "4.3.4",
     "eslint": "7.23.0",
@@ -47,5 +48,17 @@
         "path": "build/lint-report/eslint-html.html"
       }
     ]
-  }
+  },
+  "contributors": [
+    "Allegra Chen <allegrachen@outlook.com>",
+    "Parvez Akkas <parvez.akkas@gmail.com>"
+  ],
+  "keywords": [
+    "oembed",
+    "remarkable oembed",
+    "remarkable plugin",
+    "remarkable markdown parser",
+    "markdown embed",
+    "markdown rich media"
+  ]
 }
