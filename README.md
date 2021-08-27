@@ -101,3 +101,24 @@ Below are some useful commands that can be executed from the root of this reposi
 -  `./gradlew lint`: Runs the eslint for all `.js` files. Generates reports in `build/lint-report` directory as well as your terminal.
 
 - `./gradlew test`: Runs all test related gradle tasks, including `unit_test` and `lint`.
+
+
+## Maintenance
+
+This plugin currently is not being publish it to an npm registry. This section of the document is for maintainers of this repo on process for maintaining changes and release process.
+
+### Release
+
+[Semantic Versioning](https://semver.org/) must be followed. When a new release is required, create a Git Tag and a release in GitHub following semantic versioning schema.
+
+- In GitHub repo, click "Create a new release"
+- In the "New Release" page:
+    - From the "Choose a tag" dropdown, type a new release version; for example: `v1.0.0`.
+    - Type the same version number as "Release Title"
+    - Give a brief description in the text box. Ideally a list of PRs and the contributor's name.
+    - Click "Publish Release".
+
+The above steps will create a new git tag as well as create a new GitHub release.
+
+Ideally we'd have the above steps automated and is taken care of through GitHub Actions as part of CI CD process.
+
