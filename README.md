@@ -1,81 +1,94 @@
 # Remarkable oEmbed Plugin
 
-This repository builds a plugin for embedding external contents, e.g. videos, to Markdown documents. Utilizing the [oEmbed API](https://oembed.com/) and the [Rmarkable markdown parser](https://github.com/jonschlinkert/remarkable), the plugin in this repo provides a custom Markdown syntax that you can use in your Markdown document to embed external contents.
+This repository builds a plugin for [Rmarkable markdown parser](https://github.com/jonschlinkert/remarkable) that allows embedding external contents, e.g. videos, to Markdown documents.
+
+The plugin provides a custom Markdown syntax that can be used in Markdown document to embed external contents using a URL, like embedding an image. It expects external contents to be available from the provided URL following the [oEmbed specs](https://oembed.com/).
+
+
+## Installation
+
+Add `remarkable-oembed` to your project using a package manager. For example:
+
+```sh
+yarn add https://github.com/elasticpath/remarkable-oembed\#v1.0.0 --dev
+```
+
+**Note**: The above example shows adding the package using the source repo's URL. The version number at the end is a git tag. Ideally it should be installed from npm registry but this plugin is not published to npm registry yet.
 
 ## Usage
-1. Add `remarkable` and `remarkable-oembed` to your project using a package manager:
 
-    ```
-    yarn add -D remarkable remarkable-oembed
-    ```
+Enable the `remarkable-oembed` plugin and let Remarkable parse the markdown content:
 
-2. Enable the `remarkable` and `remarkable-oembed` plugin:
+``` js
+const { Remarkable } = require('remarkable')
+const remarkableOembed = require('remarkable-oembed')
 
-    ``` js
-    const { Remarkable } = require('remarkable')
-    const remarkableOembed = require('remarkable-oembed')
+let md = new Remarkable().use(remarkableOembed)
+md.render('!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)')
+```
 
-    let md = new Remarkable().use(remarkableOembed)
-    ```
+Above markdown content will be parsed and give you following html:
 
-3. Use the oEmbed remarkable syntax like following:
+```html
+<div class="oembed oembed-video"><iframe src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" width="200" height="113" frameborder="0"></iframe></div>
+```
 
-    - With an alternative text and title:
-      ```
-      !oembed[alternative text](source url "title")
+See the next section for more details on the syntax.
 
-      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Elastic Path Commerce Cloud")
-      ```
+### Markdown syntax processed by remarkable-oembed
 
-    - With an alternative text only:
-      ```
-      !oembed[alternative text](source url)
+- With an alternative text and title:
 
-      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg)
-      ```
-      **Note:** Please make sure that there is no space between your source URL and the closing bracket.
-      ```
-      !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg     )
-      ```
-      The Markdown above will not work.
+    ```md
+    !oembed[alternative text](source url "title")
 
-    - With a title only:
-      ```
-      !oembed[](source url "title")
-
-      !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Explains Elastic Path Commerce Cloud")
-      ```
-
-    - With no alternative text or title:
-      ```
-      !oembed[](source url)
-
-      !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)
-      ```
-
-    **Note:** You can add extra configuration of the oEmbed response by adding extra query parameters to the end of the source url.
-
-    For instance, `maxwidth` and `maxheight` are two valid request parameters for rich and video type according to section *2.3.4.2. The video type* and *2.3.4.4. The rich type* from [oembed](https://oembed.com/). You can specify the width and height by adding `&maxwidth=` and `&maxheight=` to the end of the source url:
-    ```
-    !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg&maxwidth=100&maxheight=500)
+    !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Elastic Path Commerce Cloud")
     ```
 
-    There are also custom options implemented by each provider, e.g. `theme` option for [codesandbox](https://codesandbox.io/docs/embedding). According to its documentation, you could trigger the light theme by adding `?theme=light` to the end of the source url:
+- With an alternative text only:
+
+    ```md
+    !oembed[alternative text](source url)
+
+    !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg)
     ```
-    !oembed[](https://codesandbox.io/s/react-new?theme=light)
+    **Note:** Please make sure that there is no space between your source URL and the closing bracket.
+
+    ```md
+    !oembed[A Youtube video about Elastic Path Commerce Cloud](https://www.youtube.com/watch?v=7ALwNmwYxBg     )
     ```
 
-4. Render the Markdown to get corresponding HTML ouput:
+    The Markdown above will not work.
 
-    ```js
-    md.render('!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)')
+- With a title only:
+
+    ```md
+    !oembed[](source url "title")
+
+    !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg "What is Explains Elastic Path Commerce Cloud")
     ```
 
-    This will give you the output:
+- With no alternative text or title:
 
-    ```js
-    '<iframe width="200" height="113" src="https://www.youtube.com/embed/7ALwNmwYxBg?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+    ```md
+    !oembed[](source url)
+
+    !oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)
     ```
+
+You can add extra configuration to the oEmbed URL by adding extra query parameters to the end of the source url.
+
+For instance, `maxwidth` and `maxheight` are two valid request parameters for `rich` and `video` type according to section *2.3.4.2. The video type* and *2.3.4.4. The rich type* from [oembed](https://oembed.com/). You can specify the width and height by adding `&maxwidth=` and `&maxheight=` to the end of the source url:
+
+```md
+!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg&maxwidth=100&maxheight=500)
+```
+
+There are also custom options implemented by each provider, e.g. `theme` option for [codesandbox](https://codesandbox.io/docs/embedding). According to its documentation, you could trigger the light theme by adding `?theme=light` to the end of the source url:
+
+```md
+!oembed[](https://codesandbox.io/s/react-new?theme=light)
+```
 
 
 ## Development
@@ -115,7 +128,7 @@ This plugin currently is not being publish it to an npm registry. This section o
 - In the "New Release" page:
     - From the "Choose a tag" dropdown, type a new release version; for example: `v1.0.0`.
     - Type the same version number as "Release Title"
-    - Give a brief description in the text box. Ideally a list of PRs and the contributor's name.
+    - Give a brief description in the text box. Ideally a list of PRs with features/fixes added and the corresponding contributor's name.
     - Click "Publish Release".
 
 The above steps will create a new git tag as well as create a new GitHub release.
