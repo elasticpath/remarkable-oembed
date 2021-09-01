@@ -1,6 +1,6 @@
 # Remarkable oEmbed Plugin
 
-This repository builds a plugin for [Rmarkable markdown parser](https://github.com/jonschlinkert/remarkable) that allows embedding external contents, e.g. videos, to Markdown documents.
+This repository builds a plugin for [Remarkable markdown parser](https://github.com/jonschlinkert/remarkable) that allows embedding external contents, e.g. videos, to Markdown documents.
 
 The plugin provides a custom Markdown syntax that can be used in Markdown document to embed external contents using a URL, like embedding an image. It expects external contents to be available from the provided URL following the [oEmbed specs](https://oembed.com/).
 
@@ -9,11 +9,19 @@ The plugin provides a custom Markdown syntax that can be used in Markdown docume
 
 Add `remarkable-oembed` to your project using a package manager. For example:
 
+Using `yarn`:
+
 ```sh
-yarn add https://github.com/elasticpath/remarkable-oembed\#v1.0.0 --dev
+yarn add https://github.com/elasticpath/remarkable-oembed#v1.0.0 --dev
 ```
 
-**Note**: The above example shows adding the package using the source repo's URL. The version number at the end is a git tag. Ideally it should be installed from npm registry but this plugin is not published to npm registry yet.
+Using `npm`:
+
+```sh
+npm install https://github.com/elasticpath/remarkable-oembed#v1.0.0 --save-dev
+```
+
+**Note**: The above examples show adding the package using the source repo's URL. The version number at the end is a git tag. Ideally it should be installed from npm registry but this plugin is not published to npm registry yet.
 
 ## Usage
 
@@ -118,7 +126,7 @@ Below are some useful commands that can be executed from the root of this reposi
 
 ## Maintenance
 
-This plugin currently is not being publish it to an npm registry. This section of the document is for maintainers of this repo on process for maintaining changes and release process.
+This plugin currently is not published it to an npm registry. This section of the document is for maintainers of this repo on process for maintaining changes and release process.
 
 ### Release
 
