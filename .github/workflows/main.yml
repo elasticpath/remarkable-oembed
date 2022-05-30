@@ -1,0 +1,86 @@
+name: CI/CD
+
+on:
+  push:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  # This job uses skip-duplicate-actions to skip one of the duplicate workflow runs when you push to a branch with an open PR.
+  check_duplicate_workflow:
+    needs: []
+    runs-on: ubuntu-20.04
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: 'same_content_newer'
+          do_not_skip: '["push"]'
+
+  lint:
+    needs: [check_duplicate_workflow]
+    runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Run lint
+        run: ./gradlew lint
+  
+  build:
+    needs: [check_duplicate_workflow]
+    runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Build bundles
+        run: ./gradlew rollup
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
+          path: dist
+          retention-days: 3
+
+  test:
+    needs: [check_duplicate_workflow]
+    runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Run tests
+        run: ./gradlew unit_test
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.job }}-results
+          path: build/test-report
+          retention-days: 3
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v1.27
+        with:
+          files: build/test-report/**/*.xml
+  
+  release:
+    needs: [lint, build, test]
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta') }}
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELASTICPATH }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
+          path: dist
+      - name: Release, publish package
+        run: ./gradlew release

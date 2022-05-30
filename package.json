@@ -1,12 +1,20 @@
 {
-  "name": "remarkable-oembed",
+  "name": "@elasticpath/remarkable-oembed",
   "description": "Plugin for remarkable markdown parser for embedding rich media from external sites using oEmbed API and specs",
-  "version": "1.0.0",
+  "version": "0.0.0-semantic-release",
   "main": "src/index.js",
   "repository": "git@github.com:elasticpath/remarkable-oembed.git",
   "author": "Allegra Chen <allegra.chen@elasticpath.com>",
   "license": "GPL-3.0",
+  "release": {
+    "branches": "main"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
     "chai": "4.3.4",
     "eslint": "7.23.0",
     "eslint-config-standard": "16.0.2",
@@ -19,9 +27,15 @@
     "mocha-multi-reporters": "1.5.1",
     "mochawesome": "6.2.2",
     "nyc": "15.1.0",
-    "remarkable": "2.0.1"
+    "remarkable": "2.0.1",
+    "rollup": "^2.75.3",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.4"
   },
   "dependencies": {
+    "rollup-plugin-babel": "^4.4.0",
     "xmlhttprequest": "^1.8.0"
   },
   "peerDependencies": {
@@ -29,7 +43,8 @@
   },
   "scripts": {
     "test": "nyc mocha --reporter mocha-multi-reporters --reporter-options configFile=reporter-config.json",
-    "lint": "eslint --format eslint-formatter-multiple src/** test/**"
+    "lint": "eslint --format eslint-formatter-multiple src/** test/**",
+    "rollup": "rollup -c"
   },
   "eslint-formatter-multiple": {
     "formatters": [
