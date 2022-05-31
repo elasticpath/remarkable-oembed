@@ -12,16 +12,14 @@ Add `remarkable-oembed` to your project using a package manager. For example:
 Using `yarn`:
 
 ```sh
-yarn add https://github.com/elasticpath/remarkable-oembed#v1.0.0 --dev
+yarn add @elasticpath/remarkable-oembed --dev
 ```
 
 Using `npm`:
 
 ```sh
-npm install https://github.com/elasticpath/remarkable-oembed#v1.0.0 --save-dev
+npm install @elasticpath/remarkable-oembed --save-dev
 ```
-
-**Note**: The above examples show adding the package using the source repo's URL. The version number at the end is a git tag. Ideally it should be installed from npm registry but this plugin is not published to npm registry yet.
 
 ## Usage
 
@@ -29,7 +27,7 @@ Enable the `remarkable-oembed` plugin and let Remarkable parse the markdown cont
 
 ``` js
 const { Remarkable } = require('remarkable')
-const remarkableOembed = require('remarkable-oembed')
+const remarkableOembed = require('@elasticpath/remarkable-oembed')
 
 let md = new Remarkable().use(remarkableOembed)
 md.render('!oembed[](https://www.youtube.com/watch?v=7ALwNmwYxBg)')
@@ -115,7 +113,9 @@ This repository is also configured with "EditorConfig" to make sure everyone's f
 
 Below are some useful commands that can be executed from the root of this repository in your terminal.
 
-- `./gradlew clean`: Removes `build` directory so that you have a fresh build result.
+- `./gradlew clean`: Removes `build` and `dist` directory so that you have a fresh build result.
+
+- `./gradlew rollup`: Bundles the `.js` files for NPM release.
 
 - `./gradlew unit_test`: Runs the mocha unit tests for the source files in `src` directory. Generates reports in `build/test-report` and `build/coverage-report` directories as well as your terminal.
 
@@ -123,24 +123,10 @@ Below are some useful commands that can be executed from the root of this reposi
 
 - `./gradlew test`: Runs all test related gradle tasks, including `unit_test` and `lint`.
 
+### Release
+
+Publishing to NPM and releasing in GitHub is automated by the CI/CD pipeline in this repo, and uses [Semantic Release](https://github.com/semantic-release/semantic-release), commit messages must follow the format described in the documentation for a release to be triggered.
 
 ## Maintenance
 
-This plugin currently is not published it to an npm registry. This section of the document is for maintainers of this repo on process for maintaining changes and release process.
-
-### Release
-
-[Semantic Versioning](https://semver.org/) must be followed. When a new release is required, create a Git Tag and a release in GitHub following semantic versioning schema.
-
-- In GitHub repo, click "Create a new release"
-- In the "New Release" page:
-    - From the "Choose a tag" dropdown, type a new release version; for example: `v1.0.0`.
-    - Type the same version number as "Release Title"
-    - Give a brief description in the text box. Ideally a list of PRs with features/fixes added and the corresponding contributor's name.
-    - Click "Publish Release".
-
-The above steps will create a new git tag as well as create a new GitHub release.
-
-Ideally we'd have the above steps automated and is taken care of through GitHub Actions as part of CI CD process.
-
-test
+This plugin is published to the [npm registry under `@elasticpath` organization](https://www.npmjs.com/package/@elasticpath/remarkable-oembed). This section of the document is for maintainers of this repo on process for maintaining changes and release process.
