@@ -29,10 +29,6 @@ yarn_install {
 
 
 // -------- Build related tasks ----------
-clean {
-  delete 'node_modules', '.nyc_output', 'dist'
-}
-
 task rollup(type: YarnTask) {
   description 'Bundle all .js files'
   group 'Build'
@@ -41,6 +37,12 @@ task rollup(type: YarnTask) {
 
   args = ['rollup']
 }
+
+clean {
+  delete 'node_modules', '.nyc_output', 'dist'
+}
+
+build.dependsOn 'rollup'
 
 
 // -------- Test related tasks ----------
@@ -80,8 +82,6 @@ task test {
 task release(type: NpxTask) {
   description 'Release to NPM and GitHub'
   group 'Release'
-
-  dependsOn 'yarn_install'
 
   command = 'semantic-release'
 }
