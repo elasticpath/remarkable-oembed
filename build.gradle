@@ -39,7 +39,7 @@ task rollup(type: YarnTask) {
 }
 
 clean {
-  delete 'node_modules', '.nyc_output', 'dist'
+  delete 'node_modules', '.nyc_output'
 }
 
 build.dependsOn 'rollup'

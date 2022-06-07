@@ -113,7 +113,7 @@ This repository is also configured with "EditorConfig" to make sure everyone's f
 
 Below are some useful commands that can be executed from the root of this repository in your terminal.
 
-- `./gradlew clean`: Removes `build` and `dist` directory so that you have a fresh build result.
+- `./gradlew clean`: Removes `build` directory so that you have a fresh build result.
 
 - `./gradlew rollup`: Bundles the `.js` files for NPM release.
 
@@ -123,10 +123,6 @@ Below are some useful commands that can be executed from the root of this reposi
 
 - `./gradlew test`: Runs all test related gradle tasks, including `unit_test` and `lint`.
 
-### Release
+### Commit convention
 
 Publishing to NPM and releasing in GitHub is automated by the CI/CD pipeline in this repo, and uses [Semantic Release](https://github.com/semantic-release/semantic-release), commit messages must follow the format described in the documentation for a release to be triggered.
-
-## Maintenance
-
-This plugin is published to the [npm registry under `@elasticpath` organization](https://www.npmjs.com/package/@elasticpath/remarkable-oembed). This section of the document is for maintainers of this repo on process for maintaining changes and release process.

@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
-          path: dist
+          path: build
           retention-days: 3
 
   test:
@@ -81,6 +81,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
-          path: dist
+          path: build
       - name: Release, publish package
         run: ./gradlew release

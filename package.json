@@ -2,7 +2,7 @@
   "name": "@elasticpath/remarkable-oembed",
   "description": "Plugin for remarkable markdown parser for embedding rich media from external sites using oEmbed API and specs",
   "version": "0.0.0-semantic-release",
-  "main": "dist/bundle.min.js",
+  "main": "build/bundle.min.js",
   "repository": "git@github.com:elasticpath/remarkable-oembed.git",
   "author": "Allegra Chen <allegra.chen@elasticpath.com>",
   "license": "GPL-3.0",
