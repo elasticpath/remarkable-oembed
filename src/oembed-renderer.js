@@ -1,5 +1,5 @@
 const { findMatchingEndpoint, sendOembedRequest, parseOembedResponse } = require('./utils')
-const providers = require('../data/providers.json')
+const providers = require('../data/providers')
 
 /**
  * Render the HTML element for oEmbed Markdown syntax.

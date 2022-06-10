@@ -53,7 +53,7 @@ const oembedBlockTests = [
   },
   { // Provider endpoint url ends with a trailing slash
     md: '!oembed[](https://open.spotify.com/playlist/37i9dQZF1DX4sWSpwq3LiO)',
-    html: '<div class="oembed oembed-rich"><iframe width="100%" height="380" allowtransparency="true" frameborder="0" allow="encrypted-media" title="Spotify Embed: Peaceful Piano" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO"></iframe></div>\n'
+    html: '<div class="oembed oembed-rich"><iframe style="border-radius: 12px" width="100%" height="380" title="Spotify Embed: Peaceful Piano" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO?utm_source=oembed"></iframe></div>\n'
   }
 ]
 

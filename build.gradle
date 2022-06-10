@@ -12,7 +12,7 @@ node {
 
   // Version of node to download and install (only used if download is true)
   // It will be unpacked in the workDir
-  version = '14.16.0'
+  version = '16.15.0'
 
   // Version of Yarn to use
   // Any Yarn task first installs Yarn in the yarnWorkDir
@@ -29,9 +29,20 @@ yarn_install {
 
 
 // -------- Build related tasks ----------
+task rollup(type: YarnTask) {
+  description 'Bundle all .js files'
+  group 'Build'
+
+  dependsOn 'yarn_install'
+
+  args = ['rollup']
+}
+
 clean {
   delete 'node_modules', '.nyc_output'
 }
+
+build.dependsOn 'rollup'
 
 
 // -------- Test related tasks ----------
@@ -65,4 +76,12 @@ task test {
   group 'Test'
 
   dependsOn 'lint', 'unit_test'
+}
+
+// -------- Release related tasks ----------
+task release(type: NpxTask) {
+  description 'Release to NPM and GitHub'
+  group 'Release'
+
+  command = 'semantic-release'
 }

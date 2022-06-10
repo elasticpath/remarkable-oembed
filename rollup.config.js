@@ -1,0 +1,28 @@
+import { babel } from '@rollup/plugin-babel'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
+
+import pkg from './package.json'
+
+export default {
+  input: 'src/index.js',
+  output: {
+    file: 'build/bundle.min.js',
+    format: 'cjs',
+    exports: 'auto'
+  },
+  external: [...Object.keys(pkg.dependencies || {})],
+  plugins: [
+    commonjs(),
+    nodeResolve({ browser: true }),
+    terser(),
+    babel({
+      babelHelpers: 'bundled',
+      exclude: ['package.json', '**/node_modules/**'],
+      presets: [
+        ['@babel/preset-env', { modules: false }]
+      ]
+    })
+  ]
+}
